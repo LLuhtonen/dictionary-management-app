@@ -1,0 +1,36 @@
+div.main {
+    text-align: center;
+    margin: 3vw;
+}
+
+@media (max-width: 1024px) {
+    h1.main-header {
+        font-size: 6vw;
+        color: #34c8fd;
+        margin-bottom: 5vw;
+    }
+
+    h3 {
+        font-size: 4vw !important;
+        margin: 1.3vw 0 !important;
+    }
+
+    h4 {
+        font-size: 3vw !important;
+        margin: 1.3vw 0 !important;
+    }
+}
+
+div.list-item {
+    border: 1px solid #34c8fd;
+    word-wrap: break-word;
+}
+
+input {
+    display: table-cell;
+    width: 100%;
+}
+
+Button.add-item {
+    margin: 1.39vw 0;
+}

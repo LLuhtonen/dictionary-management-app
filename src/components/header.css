@@ -1,0 +1,8 @@
+@media (min-width: 992px) {
+    div.navbar-links {
+        margin-left: 5vw;
+    }
+    div.navbar-links:first-of-type {
+        margin-left: 50vw;
+    }
+}

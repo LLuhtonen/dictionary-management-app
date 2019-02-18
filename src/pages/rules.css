@@ -1,0 +1,22 @@
+div.rules-container {
+    margin-top: 5vw;
+    text-align: center;
+}
+
+button.rules-button {
+    margin-top: 7vw;
+}
+
+button.start-button {
+    margin-top: 3vw;
+}
+
+button a {
+    color: white;
+}
+
+@media (max-width: 992px) {
+    div.homepage-container h1 {
+        font-size: 5vw;
+    }
+}

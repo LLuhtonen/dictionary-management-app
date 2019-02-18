@@ -1,0 +1,5 @@
+@media (max-width: 992px) {
+    div.input-error-message{
+        font-size: 3vw;
+    }
+}
