@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { addWordPair, saveEdit } from '../redux/dictionary.actions';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {addWordPair, saveEdit} from '../redux/dictionary.actions';
 import Button from 'react-bootstrap/Button';
-import { validateInput } from '../lib/validator';
 import './wordPairEditor.css';
 
 class WordPairEditor extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -23,48 +22,47 @@ class WordPairEditor extends Component {
     }
 
     changeDomainInput = domain => {
-        this.setState({ domainInput: domain });
+        this.setState({domainInput: domain});
     };
 
     changeRangeInput = range => {
-        this.setState({ rangeInput: range });
+        this.setState({rangeInput: range});
     };
 
     handleSave = () => {
         const { domainInput, rangeInput } = this.state;
         const { dictionary, id, addWordPair, saveEdit, match } = this.props;
-        const errors = validateInput(dictionary, { id: id, domain: domainInput, range: rangeInput });
-            if (!id) {
-                addWordPair({
-                    wordPair: {
-                        domain: domainInput,
-                        range: rangeInput,
-                        error: errors.error
-                    },
-                    dictionaryId: match.params.id
-                });
-            } else {
-                saveEdit({
-                    id: id,
-                    wordPair: {
-                        domain: domainInput,
-                        range: rangeInput,
-                        error: errors.error
-                    },
-                    dictionaryId: match.params.id
-                });
-            }
-            this.setState({
-                domainInput: '',
-                rangeInput: '',
-            })
-        };
+        if (!id) {
+            addWordPair({
+                wordPair: {
+                    domain: domainInput,
+                    range: rangeInput,
+                },
+                dictionaryId: match.params.id,
+                dictionary
+            });
+        } else {
+            saveEdit({
+                id: id,
+                wordPair: {
+                    domain: domainInput,
+                    range: rangeInput,
+                },
+                dictionaryId: match.params.id,
+                dictionary
+            });
+        }
+        this.setState({
+            domainInput: '',
+            rangeInput: '',
+        })
+    };
 
 
-render() {
+    render() {
         const { domainInput, rangeInput } = this.state;
         const isNew = !this.props.id;
-        return(
+        return (
             <div>
                 <h3>{isNew ? 'Add' : 'Edit'} a word pair</h3>
                 <div className="container">
@@ -101,5 +99,5 @@ render() {
 
 export default connect(
     null,
-    { addWordPair, saveEdit }
+    {addWordPair, saveEdit}
 )(WordPairEditor);

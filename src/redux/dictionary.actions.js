@@ -2,18 +2,22 @@ import { ADD_WORD_PAIR, DELETE_WORD_PAIR, EDIT_WORD_PAIR, SAVE_EDIT } from './ac
 
 let nextId = 0;
 
-export const addWordPair = ({ wordPair, dictionaryId }) => ({
+export const addWordPair = ({ wordPair, dictionaryId, dictionary }) => ({
     type: ADD_WORD_PAIR,
     payload: {
         id: ++nextId,
         wordPair,
-        dictionaryId
+        dictionaryId,
+        dictionary
     }
 });
 
-export const deleteWordPair = wordPair => ({
+export const deleteWordPair = (dictionaryList, wordPair) => ({
     type: DELETE_WORD_PAIR,
-    payload: { wordPair }
+    payload: {
+        dictionaryList,
+        wordPair
+    }
 });
 
 export const editWordPair = id => ({
@@ -21,11 +25,12 @@ export const editWordPair = id => ({
     payload: { id }
 });
 
-export const saveEdit = ({ id, wordPair, dictionaryId }) => ({
+export const saveEdit = ({ id, wordPair, dictionaryId, dictionary }) => ({
     type: SAVE_EDIT,
     payload: {
         wordPair,
         id,
-        dictionaryId
+        dictionaryId,
+        dictionary
     }
 });

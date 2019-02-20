@@ -3,51 +3,59 @@ import { connect } from 'react-redux';
 import { editWordPair, deleteWordPair } from '../redux/dictionary.actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const caseErrorIcon = error => {
-    switch (error) {
-        case 'dup': {
-            return 'clone'
-        }
-        case 'fork': {
-            return 'code-branch'
-        }
-        case 'cycle': {
-            return 'sync'
-        }
-        case 'chain': {
-            return 'ban'
-        }
-        default: return '';
+const caseErrorIcon = errors => {
+    let errorTypes = [];
+    if (errors.length > 0) {
+        errors.forEach(item => {
+            errorTypes = [...errorTypes, item.type]
+        })
     }
+    if (errorTypes.includes('cycle')) {
+        return 'sync';
+    }
+    if (errorTypes.includes('chain')) {
+        return 'ban';
+    }
+    if (errorTypes.includes('fork')) {
+        return 'code-branch';
+    }
+    if (errorTypes.includes('dup')) {
+        return 'clone';
+    }
+    return '';
 };
 
-const caseSeverity = error => {
+const caseSeverity = errors => {
 
-    switch (error) {
-        case 'dup': {
-            return '#ffae42'
-        }
-        case 'fork': {
-            return '#ffae42'
-        }
-        case 'cycle': {
-            return 'red'
-        }
-        case 'chain': {
-            return 'red'
-        }
-        default: return 'black';
+    let errorTypes = [];
+    if (errors.length > 0) {
+        errors.forEach(item => {
+            errorTypes = [...errorTypes, item.type]
+        })
     }
+    if (errorTypes.includes('cycle')) {
+        return 'red';
+    }
+    if (errorTypes.includes('chain')) {
+        return 'red';
+    }
+    if (errorTypes.includes('fork')) {
+        return '#ffae42';
+    }
+    if (errorTypes.includes('dup')) {
+        return '#ffae42';
+    }
+    return 'black';
 };
 
-const WordPair = ({ dictionaryItem, editWordPair, deleteWordPair }) => (
+const WordPair = ({ dictionaryItem, dictionaryList, editWordPair, deleteWordPair }) => (
     <div className="row">
         <div  className="list-item col-2 col-md-1 offset-md-1">
             {
-                dictionaryItem.wordPair.error ?
+                dictionaryItem.wordPair.errors && dictionaryItem.wordPair.errors.length > 0 ?
                     <FontAwesomeIcon
-                        icon={caseErrorIcon(dictionaryItem.wordPair.error)}
-                        color ={caseSeverity(dictionaryItem.wordPair.error)}
+                        icon={caseErrorIcon(dictionaryItem.wordPair.errors)}
+                        color={caseSeverity(dictionaryItem.wordPair.errors)}
                     />
                     : ''
             }
@@ -65,7 +73,7 @@ const WordPair = ({ dictionaryItem, editWordPair, deleteWordPair }) => (
             />
             <FontAwesomeIcon
                 icon="trash-alt"
-                onClick={()=> deleteWordPair(dictionaryItem)}
+                onClick={()=> deleteWordPair(dictionaryList, dictionaryItem)}
             />
         </div>
     </div>

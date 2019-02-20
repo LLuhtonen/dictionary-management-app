@@ -27,7 +27,7 @@ const Dictionary = ({ dictionary, domain, range, id, match }) => (
                                 dictionary
                                     .filter(item => Number(item.dictionaryId === match.params.id))
                                     .map((item) => {
-                                        return <WordPair key={`dictionaryItem-${item.id}`} dictionaryItem={item} />
+                                        return <WordPair key={`dictionaryItem-${item.id}`} dictionaryItem={item} dictionaryList={dictionary} />
                                     })
                             }
                             </div>
