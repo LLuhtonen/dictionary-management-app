@@ -85,6 +85,7 @@ render() {
                     <Button
                         className="add-item"
                         variant="primary"
+                        disabled={domainInput.trim() === '' || rangeInput.trim() === ''}
                         onClick={this.handleSave}
                         block
                     >{isNew ? 'Add' : 'Edit'} Word Pair</Button>
