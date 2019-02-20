@@ -42,7 +42,7 @@ const caseSeverity = error => {
 
 const WordPair = ({ dictionaryItem, editWordPair, deleteWordPair }) => (
     <div className="row">
-        <div  className="list-item col-1 offset-1">
+        <div  className="list-item col-2 col-md-1 offset-md-1">
             {
                 dictionaryItem.wordPair.error ?
                     <FontAwesomeIcon
@@ -58,7 +58,7 @@ const WordPair = ({ dictionaryItem, editWordPair, deleteWordPair }) => (
         <div className="list-item col-4">
             <p>{dictionaryItem.wordPair.range}</p>
         </div>
-        <div className="col-2">
+        <div className="list-item col-2">
             <FontAwesomeIcon
                 icon="edit"
                 onClick={()=> editWordPair(dictionaryItem.id)}

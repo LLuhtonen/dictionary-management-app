@@ -21,6 +21,11 @@ mark.severe-mark {
 }
 
 @media (max-width: 1024px) {
+    div.error-title-container {
+        float: left;
+        margin-top: 10vw;
+    }
+
     h1 {
         font-size: 6vw;
         margin-bottom: 5vw;

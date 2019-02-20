@@ -1,13 +1,27 @@
-export const getDictionaryListState = store => store.dictionaryReducer;
+export const getDictionaryState = store => store.dictionaryReducer;
+
+export const getDictionary = store =>
+    getDictionaryState(store) ? getDictionaryState(store).dictionaryIds : [];
+
+export const getDictionaryItemById = (store, id) =>
+    getDictionaryState(store) ? { ...getDictionaryState(store).byIds[id], id } : {};
+
+export const getDictionaryItems = store =>
+    getDictionary(store).map(id => getDictionaryItemById(store, id));
+
+export const getBySelectedId = store =>
+    getDictionaryState(store).selectedPairId ? getDictionaryItemById(store, getDictionaryState(store).selectedPairId) : {};
+
+export const getDictionaryListState = store => store.dictionaryListReducer;
 
 export const getDictionaryList = store =>
     getDictionaryListState(store) ? getDictionaryListState(store).dictionaryIds : [];
 
-export const getDictionaryItemById = (store, id) =>
+export const getDictionaryListItemById = (store, id) =>
     getDictionaryListState(store) ? { ...getDictionaryListState(store).byIds[id], id } : {};
 
-export const getDictionaryItems = store =>
-    getDictionaryList(store).map(id => getDictionaryItemById(store, id));
+export const getDictionaryListItems = store =>
+    getDictionaryList(store).map(id => getDictionaryListItemById(store, id));
 
-export const getBySelectedId = store =>
-    getDictionaryListState(store).selectedPairId ? getDictionaryItemById(store, getDictionaryListState(store).selectedPairId) : {};
+export const getDictionaryListByIds = store =>
+    getDictionaryListState(store).selectedListId ? getDictionaryListItemById(store, getDictionaryListState(store).selectedListId) : {};

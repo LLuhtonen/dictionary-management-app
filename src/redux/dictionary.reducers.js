@@ -11,7 +11,7 @@ const initialState = {
 export default function(state = initialState, action) {
     switch (action.type) {
         case ADD_WORD_PAIR: {
-            const { wordPair, id } = action.payload;
+            const { wordPair, id, dictionaryId } = action.payload;
             return {
                 ...state,
                 dictionaryIds: [...state.dictionaryIds, id],
@@ -20,6 +20,7 @@ export default function(state = initialState, action) {
                     ...state.byIds,
                     [id]: {
                         wordPair,
+                        dictionaryId
                     }
                 }
             };
@@ -42,10 +43,10 @@ export default function(state = initialState, action) {
             };
         }
         case SAVE_EDIT: {
-            const { wordPair, id } = action.payload;
+            const { wordPair, id, dictionaryId } = action.payload;
             return {
                 ...state,
-                byIds: Object.assign(state.byIds, { [id]: { wordPair } }),
+                byIds: Object.assign(state.byIds, { [id]: { wordPair, dictionaryId } }),
                 selectedPairId: undefined
             };
         }

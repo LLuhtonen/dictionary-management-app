@@ -1,9 +1,9 @@
-export const validateInput = (dictionaryList, wordPair) => {
+export const validateInput = (dictionary, wordPair) => {
     const domain = wordPair.domain.trim().toLowerCase();
     const range = wordPair.range.trim().toLowerCase();
     const id = wordPair.id;
 
-    dictionaryList.filter(item => item.id !== id).map((item) => {
+    dictionary.filter(item => item.id !== id).map((item) => {
         if (item.wordPair.domain.toLowerCase() === domain) {
             if (item.wordPair.range.toLowerCase() === range) {
                 item.wordPair.error = 'dup';
@@ -28,8 +28,8 @@ export const validateInput = (dictionaryList, wordPair) => {
     }
 };
 
-export const validateDelete = (dictionaryList, wordPair) => {
-    Object.values(dictionaryList).map((item) => {
+export const validateDelete = (dictionary, wordPair) => {
+    Object.values(dictionary).map((item) => {
         if (item.wordPair.domain.toLowerCase() === wordPair.domain) {
             if (item.wordPair.range.toLowerCase() === wordPair.range) {
                 item.wordPair.error = undefined;
@@ -44,4 +44,16 @@ export const validateDelete = (dictionaryList, wordPair) => {
             }
         }
     });
+};
+
+export const checkIfDictionaryExists = (dictionaryList, name, id) => {
+    let exists = false;
+
+    dictionaryList.map(dictionary => {
+        if (dictionary.dictionary.name.toLowerCase() === name.toLowerCase() && dictionary.id !== id) {
+            exists = true
+        }
+    });
+
+    return exists
 };

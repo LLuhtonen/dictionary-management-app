@@ -32,13 +32,16 @@ class WordPairEditor extends Component {
 
     handleSave = () => {
         const { domainInput, rangeInput } = this.state;
-        const { dictionaryList, id, addWordPair, saveEdit } = this.props;
-        const errors = validateInput(dictionaryList, { id: id, domain: domainInput, range: rangeInput });
+        const { dictionary, id, addWordPair, saveEdit, match } = this.props;
+        const errors = validateInput(dictionary, { id: id, domain: domainInput, range: rangeInput });
             if (!id) {
                 addWordPair({
-                    domain: domainInput,
-                    range: rangeInput,
-                    error: errors.error
+                    wordPair: {
+                        domain: domainInput,
+                        range: rangeInput,
+                        error: errors.error
+                    },
+                    dictionaryId: match.params.id
                 });
             } else {
                 saveEdit({
@@ -47,7 +50,8 @@ class WordPairEditor extends Component {
                         domain: domainInput,
                         range: rangeInput,
                         error: errors.error
-                    }
+                    },
+                    dictionaryId: match.params.id
                 });
             }
             this.setState({

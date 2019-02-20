@@ -1,10 +1,20 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom'
 import './errorInfo.css';
 
 const ErrorInfo = () => (
     <div className="error-info-container">
-        <h1>Errors are marked the following way</h1>
+        <Link to="/dictionary/">
+            <FontAwesomeIcon
+                icon="arrow-left"
+                style={{ position: "absolute", left: "10vw"}}
+                size="3x"
+            />
+        </Link>
+        <div className="error-title-container">
+         <h1>Errors are marked the following way</h1>
+        </div>
         <h4><mark className="warning-mark">Yellow Orange</mark> - Not Severe</h4>
         <h4><mark className="severe-mark">Red</mark> - Severe</h4>
         <div className="row row-with-margin">

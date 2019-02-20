@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Header from './components/header';
 import Index from './pages/index';
 import Rules from './pages/rules';
-import Dictionary from './pages/dictionary';
+import DictionaryListPage from './pages/dictionaryListPage';
+import DictionaryPage from './pages/dictionaryPage';
 
 
 class App extends Component {
@@ -14,7 +15,8 @@ class App extends Component {
                 <Header />
                 <Route path="/" exact component={Index} />
                 <Route path="/rules/" exact component={Rules} />
-                <Route path="/dictionary/" component={Dictionary} />
+                <Route exact path="/dictionary/" component={DictionaryListPage} />
+                <Route path="/dictionary/:id" component={DictionaryPage} />
             </div>
         </Router>
     );

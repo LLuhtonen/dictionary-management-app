@@ -6,13 +6,13 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import rootReducer from './redux/reducers';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTrashAlt, faEdit, faSync, faCodeBranch, faClone, faBan } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faEdit, faSync, faCodeBranch, faClone, faBan, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
 const store = createStore(rootReducer);
 
-library.add(faTrashAlt, faEdit, faSync, faCodeBranch, faClone, faBan);
+library.add(faTrashAlt, faEdit, faSync, faCodeBranch, faClone, faBan, faArrowLeft);
 
 ReactDOM.render(
     <Provider store={store}>

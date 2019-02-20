@@ -1,42 +1,29 @@
 import React  from 'react';
-import WordPair from './wordPair';
-import WordPairEditor from './wordPairEditor';
-import './dictionaryList.css'
+import './dictionary.css'
+import { getDictionaryListByIds, getDictionaryListItems } from '../redux/selectors';
 import { connect } from 'react-redux';
-import { getBySelectedId, getDictionaryItems } from '../redux/selectors';
+import DictionaryEditor from './dictionaryEditor';
+import DictionaryListItem from './dictionaryListItem';
 
 
-const DictionaryList = ({ dictionaryList, domain, range, id }) => (
-            <div className="main">
-                <WordPairEditor dictionaryList={dictionaryList} domainInput={domain} rangeInput={range} id={id} />
-                    {
-                        dictionaryList.length === 0 ?
-                            <h3>
-                                Dictionary is empty, start by adding something to it!
-                            </h3>
-                            :
-                            <div className="container">
-                                <div className="row">
-                                    <div className="col-4 offset-2">
-                                        <h3>Domain</h3>
-                                    </div>
-                                    <div className="col-4">
-                                        <h3>Range</h3>
-                                    </div>
-                                </div> {
-                                dictionaryList.map((item) => {return <WordPair key={`dictionaryItem-${item.id}`} dictionaryItem={item} />})
-                            }
-                            </div>
-                    }
-            </div>
+const DictionaryList = ({ dictionaryList, name, id }) => (
+    <div className="main">
+        <h1>Dictionaries Overview</h1>
+        <DictionaryEditor dictionaryList={dictionaryList} name={name} id={id} />
+        <h1>Dictionary List</h1>
+        {
+            dictionaryList.map((dictionary) => {return <DictionaryListItem key={`dictionaryListItem-${dictionary.id}`} dictionary={dictionary} />})
+        }
+    </div>
 );
 
-const mapStateToProps = state => {
-    const dictionaryList = getDictionaryItems(state);
-    const dictionaryItem = getBySelectedId(state);
-    const wordPair = dictionaryItem && dictionaryItem.wordPair ? { ...dictionaryItem.wordPair, id: dictionaryItem.id } : { domain: '', range: ''};
 
-    return { dictionaryList, ...wordPair };
+const mapStateToProps = state => {
+    const dictionaryList = getDictionaryListItems(state);
+    const dictionaryListItem = getDictionaryListByIds(state);
+    const dictionaryName = dictionaryListItem && dictionaryListItem.dictionary ? { name: dictionaryListItem.dictionary.name, id: dictionaryListItem.id } : { name: '' };
+
+    return { dictionaryList, ...dictionaryName };
 };
 
 export default connect(mapStateToProps)(DictionaryList);

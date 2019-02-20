@@ -109,7 +109,7 @@ const Rules = () => {
                 variant="primary"
                 size="lg">
                 <Link to="/dictionary">
-                    Click here begin filling your dictionary
+                    Click here to begin filling your dictionary
                 </Link>
             </Button>
         </div>
