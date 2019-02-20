@@ -1,0 +1,32 @@
+div.error-info-container {
+    text-align: center;
+    margin: 3vw;
+}
+div.row-with-margin {
+    margin-top: 2vw;
+}
+
+h4 {
+    margin: 1.3vw 0 !important;
+}
+
+mark.warning-mark {
+    color: #ffae42;
+    background-color: inherit;
+}
+
+mark.severe-mark {
+    color: red;
+    background-color: inherit;
+}
+
+@media (max-width: 1024px) {
+    h1 {
+        font-size: 6vw;
+        margin-bottom: 5vw;
+    }
+
+    h4 {
+        font-size: 3vw !important;
+    }
+}

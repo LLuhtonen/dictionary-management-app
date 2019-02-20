@@ -10,9 +10,9 @@ export const addWordPair = wordPair => ({
     }
 });
 
-export const deleteWordPair = id => ({
+export const deleteWordPair = wordPair => ({
     type: DELETE_WORD_PAIR,
-    payload: { id }
+    payload: { wordPair }
 });
 
 export const editWordPair = id => ({

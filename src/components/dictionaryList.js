@@ -3,7 +3,7 @@ import WordPair from './wordPair';
 import WordPairEditor from './wordPairEditor';
 import './dictionaryList.css'
 import { connect } from 'react-redux';
-import {getBySelectedId, getDictionaryItems} from '../redux/selectors';
+import { getBySelectedId, getDictionaryItems } from '../redux/selectors';
 
 
 const DictionaryList = ({ dictionaryList, domain, range, id }) => (

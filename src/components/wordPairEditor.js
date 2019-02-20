@@ -12,17 +12,6 @@ class WordPairEditor extends Component {
         this.state = {
             domainInput: props.domainInput,
             rangeInput: props.rangeInput,
-            errors: {
-                hasErrors: false,
-                domainErrors: {
-                    domainError: false,
-                    error: undefined
-                },
-                rangeErrors: {
-                    rangeError: false,
-                    error: undefined
-                }
-            }
         };
     }
 
@@ -43,45 +32,33 @@ class WordPairEditor extends Component {
 
     handleSave = () => {
         const { domainInput, rangeInput } = this.state;
-        const { dictionaryList, id, addWordPair, saveEdit} = this.props;
-        const errors = validateInput(dictionaryList, { domain: domainInput, range: rangeInput });
-        if (!errors.domainErrors.domainError && !errors.rangeErrors.rangeError) {
+        const { dictionaryList, id, addWordPair, saveEdit } = this.props;
+        const errors = validateInput(dictionaryList, { id: id, domain: domainInput, range: rangeInput });
             if (!id) {
                 addWordPair({
                     domain: domainInput,
-                    range: rangeInput
+                    range: rangeInput,
+                    error: errors.error
                 });
             } else {
                 saveEdit({
                     id: id,
                     wordPair: {
                         domain: domainInput,
-                        range: rangeInput
+                        range: rangeInput,
+                        error: errors.error
                     }
                 });
             }
             this.setState({
                 domainInput: '',
                 rangeInput: '',
-                errors: {
-                    hasErrors: false,
-                    domainErrors: errors.domainErrors,
-                    rangeErrors: errors.rangeErrors,
-                }
             })
-        } else {
-            this.setState({
-                errors: {
-                    hasErrors: true,
-                    domainErrors: errors.domainErrors,
-                    rangeErrors: errors.rangeErrors,
-                }
-            });
-        }
-    };
+        };
 
-    render() {
-        const { domainInput, rangeInput, errors } = this.state;
+
+render() {
+        const { domainInput, rangeInput } = this.state;
         const isNew = !this.props.id;
         return(
             <div>
@@ -95,15 +72,6 @@ class WordPairEditor extends Component {
                                 value={domainInput}
                                 type="text"
                             />
-                            <div
-                                className="input-error-message text-danger"
-                            >
-                                {
-                                    errors && errors.hasErrors && errors.domainErrors.domainError ?
-                                        errors.domainErrors.error
-                                        : ''
-                                }
-                            </div>
                         </div>
                         <div className="col-4">
                             <h4>Range: </h4>
@@ -112,15 +80,6 @@ class WordPairEditor extends Component {
                                 value={rangeInput}
                                 type="text"
                             />
-                            <div
-                                className="input-error-message text-danger"
-                            >
-                                {
-                                    errors && errors.hasErrors && errors.rangeErrors.rangeError ?
-                                        errors.rangeErrors.error
-                                        : ''
-                                }
-                            </div>
                         </div>
                     </div>
                     <Button

@@ -1,5 +1,6 @@
-import { ADD_WORD_PAIR, DELETE_WORD_PAIR, EDIT_WORD_PAIR, SAVE_EDIT } from './actionTypes';
 import { omit } from 'lodash';
+import { ADD_WORD_PAIR, DELETE_WORD_PAIR, EDIT_WORD_PAIR, SAVE_EDIT } from './actionTypes';
+import { validateDelete } from '../lib/validator';
 
 const initialState = {
     dictionaryIds: [],
@@ -24,11 +25,12 @@ export default function(state = initialState, action) {
             };
         }
         case DELETE_WORD_PAIR: {
-            const { id } = action.payload;
+            const { wordPair } = action.payload;
+            validateDelete(state.byIds, wordPair.wordPair);
             return {
                 ...state,
-                dictionaryIds: [...state.dictionaryIds.filter((_id) => _id !== id)],
-                byIds: omit(state.byIds, [id])
+                dictionaryIds: [...state.dictionaryIds.filter((_id) => _id !== wordPair.id)],
+                byIds: omit(state.byIds, [wordPair.id])
 
             };
         }

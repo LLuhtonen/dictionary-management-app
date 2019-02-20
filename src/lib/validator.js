@@ -1,95 +1,47 @@
 export const validateInput = (dictionaryList, wordPair) => {
     const domain = wordPair.domain.trim().toLowerCase();
     const range = wordPair.range.trim().toLowerCase();
+    const id = wordPair.id;
 
-    let domainErrors = {
-        domainError: false,
-        error: undefined
-    };
-
-    let rangeErrors = {
-        rangeError: false,
-        error: undefined
-    };
-
-    domainErrors = checkIfInputIsEmpty(domain, 'domain');
-    rangeErrors = checkIfInputIsEmpty(range, 'range');
-
-    if (domain === range && domain !== '') {
-        return {
-            domainErrors: {
-                domainError: true,
-                error: 'Domain and Range must not match'
-            },
-            rangeErrors: {
-                rangeError: true,
-                error: 'Domain and Range must not match'
-            }
-        }
-    }
-
-
-
-    dictionaryList.map((item) => {
+    dictionaryList.filter(item => item.id !== id).map((item) => {
         if (item.wordPair.domain.toLowerCase() === domain) {
-            domainErrors = {
-                domainError: true,
-                error: 'A domain with this input value exits!'
+            if (item.wordPair.range.toLowerCase() === range) {
+                item.wordPair.error = 'dup';
+                wordPair.error = 'dup';
+            } else {
+                item.wordPair.error = 'fork';
+                wordPair.error = 'fork';
             }
         } else if (item.wordPair.range.toLowerCase() === domain) {
-            domainErrors = {
-                domainError: true,
-                error: 'Severe Error! Range contains this Domain! ' +
-                    'Adding this value would make this dictionary unprocessable.'
-            }
-        }
-        if (item.wordPair.domain.toLowerCase() === range) {
-            rangeErrors = {
-                rangeError: true,
-                error: 'Severe Error! Domain contains this Range! ' +
-                    'Adding this value would make this dictionary unprocessable.'
+            if (item.wordPair.domain.toLowerCase() === range) {
+                item.wordPair.error = 'cycle';
+                wordPair.error = 'cycle';
+            } else {
+                item.wordPair.error = 'chain';
+                wordPair.error = 'chain';
             }
         }
     });
 
     return {
-        domainErrors: domainErrors,
-        rangeErrors: rangeErrors,
+        error: wordPair.error
     }
 };
 
-const checkIfInputIsEmpty = (string, type) => {
-    if (string === '') {
-        switch (type.toLowerCase()) {
-            case 'domain': {
-                return {
-                    domainError: true,
-                    error: 'Domain must not be empty'
-                }
+export const validateDelete = (dictionaryList, wordPair) => {
+    Object.values(dictionaryList).map((item) => {
+        if (item.wordPair.domain.toLowerCase() === wordPair.domain) {
+            if (item.wordPair.range.toLowerCase() === wordPair.range) {
+                item.wordPair.error = undefined;
+            } else {
+                item.wordPair.error = undefined;
             }
-            case 'range': {
-                return {
-                    rangeError: true,
-                    error: 'Range must not be empty'
-                }
+        } else if (item.wordPair.range.toLowerCase() === wordPair.domain) {
+            if (item.wordPair.domain.toLowerCase() === wordPair.range) {
+                item.wordPair.error = undefined;
+            } else {
+                item.wordPair.error = undefined;
             }
-            default: return false;
         }
-    } else {
-        switch (type.toLowerCase()) {
-            case 'domain': {
-                return {
-                    domainError: false,
-                    error: undefined
-                }
-            }
-            case 'range': {
-                return {
-                    rangeError: false,
-                    error: undefined
-                }
-            }
-            default: return false;
-        }
-    }
+    });
 };
