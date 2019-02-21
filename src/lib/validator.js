@@ -18,8 +18,8 @@ export const validateInput = (dictionary, wordPair, dictionaryId, isEditing) => 
                     wordPair.errors = pushError(wordPair.errors, { type: 'fork', id: item.id });
                     foundErrors = true;
                 }
-            } else if (item.wordPair.domain.toLowerCase() === range) {
-                if (item.wordPair.range.toLowerCase() === domain) {
+            } else if (item.wordPair.range.toLowerCase() === domain) {
+                if (item.wordPair.domain.toLowerCase() === range) {
                     item.wordPair.errors = pushError(item.wordPair.errors, { type: 'cycle', id: wordPair.id }, isEditing);
                     wordPair.errors = pushError(wordPair.errors, { type: 'cycle', id: item.id });
                     foundErrors = true;
@@ -47,8 +47,8 @@ export const validateDelete = (dictionary, wordPair, id) => {
             } else {
                 item.wordPair.errors = removeError(item.wordPair.errors, id);
             }
-        } else if (item.wordPair.domain.toLowerCase() === wordPair.range) {
-            if (item.wordPair.range.toLowerCase() === wordPair.domain) {
+        } else if (item.wordPair.range.toLowerCase() === wordPair.domain) {
+            if (item.wordPair.domain.toLowerCase() === wordPair.range) {
                 item.wordPair.errors = removeError(item.wordPair.errors, id);
             } else {
                 item.wordPair.errors = removeError(item.wordPair.errors, id);
