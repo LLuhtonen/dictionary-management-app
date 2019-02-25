@@ -5,6 +5,27 @@ import './dictionary.css'
 import { connect } from 'react-redux';
 import { getBySelectedId, getDictionaryItems } from '../redux/selectors';
 
+const caseErrorIcon = errors => {
+    let errorTypes = [];
+    if (!!errors && errors.length > 0) {
+        errors.forEach(item => {
+            errorTypes = [...errorTypes, item.type]
+        })
+    }
+    if (errorTypes.includes('cycle')) {
+        return  { icon: 'sync', color: 'red' };
+    }
+    if (errorTypes.includes('chain')) {
+        return  { icon: 'ban', color: 'red' };
+    }
+    if (errorTypes.includes('fork')) {
+        return  { icon: 'code-branch', color: '#ffae42' };
+    }
+    if (errorTypes.includes('dup')) {
+        return  { icon: 'clone', color: '#ffae42' };
+    }
+    return {};
+};
 
 const Dictionary = ({ dictionary, domain, range, id, match }) => (
             <div className="main">
@@ -27,7 +48,12 @@ const Dictionary = ({ dictionary, domain, range, id, match }) => (
                                 dictionary
                                     .filter(item => Number(item.dictionaryId === match.params.id))
                                     .map((item) => {
-                                        return <WordPair key={`dictionaryItem-${item.id}`} dictionaryItem={item} dictionaryList={dictionary} />
+                                        return <WordPair
+                                            key={`dictionaryItem-${item.id}`}
+                                            dictionaryItem={item}
+                                            dictionaryList={dictionary}
+                                            error={caseErrorIcon(item.wordPair.errors)}
+                                        />
                                     })
                             }
                             </div>
