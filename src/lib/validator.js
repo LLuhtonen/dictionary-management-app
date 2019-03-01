@@ -8,8 +8,8 @@ export const validateInput = (dictionary, wordPair, dictionaryId, isEditing) => 
 
     if(!!dictionaryFiltered && dictionaryFiltered.length > 0) {
         dictionaryFiltered.filter(item => item.id !== id).forEach((item) => {
-            if (item.wordPair.domain.toLowerCase() === domain) {
-                if (item.wordPair.range.toLowerCase() === range) {
+            if (domain === item.wordPair.domain.toLowerCase()) {
+                if (range === item.wordPair.range.toLowerCase()) {
                     item.wordPair.errors = pushError(item.wordPair.errors, { type: 'dup', id: wordPair.id }, isEditing);
                     wordPair.errors = pushError(wordPair.errors, { type: 'dup', id: item.id });
                     foundErrors = true;
@@ -18,8 +18,8 @@ export const validateInput = (dictionary, wordPair, dictionaryId, isEditing) => 
                     wordPair.errors = pushError(wordPair.errors, { type: 'fork', id: item.id });
                     foundErrors = true;
                 }
-            } else if (item.wordPair.range.toLowerCase() === domain) {
-                if (item.wordPair.domain.toLowerCase() === range) {
+            } else if (domain === item.wordPair.range.toLowerCase()) {
+                if (range === item.wordPair.domain.toLowerCase()) {
                     item.wordPair.errors = pushError(item.wordPair.errors, { type: 'cycle', id: wordPair.id }, isEditing);
                     wordPair.errors = pushError(wordPair.errors, { type: 'cycle', id: item.id });
                     foundErrors = true;
@@ -41,14 +41,14 @@ export const validateInput = (dictionary, wordPair, dictionaryId, isEditing) => 
 
 export const validateDelete = (dictionary, wordPair, id) => {
     dictionary.filter(item => item.id !== id).forEach((item) => {
-        if (item.wordPair.domain.toLowerCase() === wordPair.domain) {
-            if (item.wordPair.range.toLowerCase() === wordPair.range) {
+        if (wordPair.domain.toLowerCase() === item.wordPair.domain) {
+            if (wordPair.range.toLowerCase() === item.wordPair.range) {
                 item.wordPair.errors = removeError(item.wordPair.errors, id)
             } else {
                 item.wordPair.errors = removeError(item.wordPair.errors, id);
             }
-        } else if (item.wordPair.range.toLowerCase() === wordPair.domain) {
-            if (item.wordPair.domain.toLowerCase() === wordPair.range) {
+        } else if (wordPair.range.toLowerCase() === item.wordPair.domain) {
+            if (wordPair.domain.toLowerCase() === item.wordPair.range) {
                 item.wordPair.errors = removeError(item.wordPair.errors, id);
             } else {
                 item.wordPair.errors = removeError(item.wordPair.errors, id);
