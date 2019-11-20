@@ -27,9 +27,9 @@ const caseErrorIcon = errors => {
     return {};
 };
 
-const Dictionary = ({ dictionary, domain, range, id, match }) => (
+const Dictionary = ({ dictionary, domain, range, id, match, suggestionsFrom }) => (
             <div className="main">
-                <WordPairEditor dictionary={dictionary} domainInput={domain} rangeInput={range} id={id} match={match} />
+                <WordPairEditor dictionary={dictionary} domainInput={domain} rangeInput={range} id={id} match={match} suggestionId={suggestionsFrom} />
                     {
                         dictionary.length === 0 ?
                             <h3>

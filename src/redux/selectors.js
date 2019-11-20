@@ -25,3 +25,10 @@ export const getDictionaryListItems = store =>
 
 export const getDictionaryListByIds = store =>
     getDictionaryListState(store).selectedListId ? getDictionaryListItemById(store, getDictionaryListState(store).selectedListId) : {};
+
+export const getDictionaryItemsByDictionaryId = (store, id) =>
+    getDictionaryState(store).byIds
+        ? Object.entries(getDictionaryState(store).byIds)
+        .filter(([key, value]) => parseInt(value.dictionaryId) === id)
+            .map(entry => entry[1])
+        : [];

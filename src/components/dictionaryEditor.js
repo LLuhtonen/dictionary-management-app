@@ -84,7 +84,6 @@ class DictionaryEditor extends Component {
                         variant="primary"
                         disabled={nameInput.trim() === ''}
                         onClick={this.handleSave}
-                        block
                     >{isNew ? 'Add' : 'Edit'} Dictionary</Button>
                 </div>
             </div>

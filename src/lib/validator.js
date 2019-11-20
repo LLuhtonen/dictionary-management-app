@@ -42,17 +42,11 @@ export const validateInput = (dictionary, wordPair, dictionaryId, isEditing) => 
 export const validateDelete = (dictionary, wordPair, id) => {
     dictionary.filter(item => item.id !== id).forEach((item) => {
         if (wordPair.domain.toLowerCase() === item.wordPair.domain) {
-            if (wordPair.range.toLowerCase() === item.wordPair.range) {
-                item.wordPair.errors = removeError(item.wordPair.errors, id)
-            } else {
-                item.wordPair.errors = removeError(item.wordPair.errors, id);
-            }
+            item.wordPair.errors = removeError(item.wordPair.errors, id);
         } else if (wordPair.range.toLowerCase() === item.wordPair.domain) {
-            if (wordPair.domain.toLowerCase() === item.wordPair.range) {
-                item.wordPair.errors = removeError(item.wordPair.errors, id);
-            } else {
-                item.wordPair.errors = removeError(item.wordPair.errors, id);
-            }
+            item.wordPair.errors = removeError(item.wordPair.errors, id);
+        } else if (wordPair.domain.toLowerCase() === item.wordPair.range) {
+            item.wordPair.errors = removeError(item.wordPair.errors, id);
         }
     });
 };

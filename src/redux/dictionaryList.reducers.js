@@ -1,5 +1,5 @@
 import { omit } from 'lodash';
-import { ADD_DICTIONARY, DELETE_DICTIONARY, EDIT_DICTIONARY, SAVE_DICTIONARY_EDIT } from './actionTypes';
+import { ADD_DICTIONARY, DELETE_DICTIONARY, EDIT_DICTIONARY, SAVE_DICTIONARY_EDIT, LINK_DICTIONARIES, SET_SUGGESTED_TO } from './actionTypes';
 
 const initialState = {
     dictionaryIds: [],
@@ -19,6 +19,8 @@ export default function(state = initialState, action) {
                     ...state.byIds,
                     [id]: {
                         dictionary,
+                        linkedTo: [],
+                        suggestedTo: null,
                     }
                 }
             };
@@ -43,7 +45,35 @@ export default function(state = initialState, action) {
             const { id, name } = action.payload;
             return {
                 ...state,
-                byIds: Object.assign(state.byIds, { [id]: { dictionary: { name: name } } }),
+                byIds: Object.assign(state.byIds, { [id]: { ...state.byIds[id], dictionary: { name: name } } }),
+                selectedListId: undefined
+            };
+        }
+        case LINK_DICTIONARIES: {
+            const { primaryId, linkToId } = action.payload;
+            if (Number.isNaN(linkToId) || state.byIds[primaryId].linkedTo.includes(linkToId)) {
+                return state;
+            }
+            return {
+                ...state,
+                byIds: Object.assign(state.byIds, { [primaryId]: { ...state.byIds[primaryId], linkedTo: [...state.byIds[primaryId].linkedTo, linkToId] } }),
+                selectedListId: undefined
+            };
+        }
+        case SET_SUGGESTED_TO: {
+            const { primaryId, suggestedTo } = action.payload;
+
+            if (Number.isNaN(suggestedTo)) {
+                return {
+                    ...state,
+                    byIds: Object.assign(state.byIds, { [primaryId]: { ...state.byIds[primaryId], suggestedTo: null } }),
+                    selectedListId: undefined
+                };
+            }
+
+            return {
+                ...state,
+                byIds: Object.assign(state.byIds, { [primaryId]: { ...state.byIds[primaryId], suggestedTo } }),
                 selectedListId: undefined
             };
         }

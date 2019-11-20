@@ -1,6 +1,6 @@
 import React  from 'react';
 import './dictionary.css'
-import { getDictionaryListByIds, getDictionaryListItems } from '../redux/selectors';
+import { getDictionaryListByIds, getDictionaryListItems, } from '../redux/selectors';
 import { connect } from 'react-redux';
 import DictionaryEditor from './dictionaryEditor';
 import DictionaryListItem from './dictionaryListItem';
@@ -12,7 +12,7 @@ const DictionaryList = ({ dictionaryList, name, id }) => (
         <DictionaryEditor dictionaryList={dictionaryList} name={name} id={id} />
         <h1>Dictionary List</h1>
         {
-            dictionaryList.map((dictionary) => {return <DictionaryListItem key={`dictionaryListItem-${dictionary.id}`} dictionary={dictionary} />})
+            dictionaryList.map((dictionary) => {return <DictionaryListItem key={`dictionaryListItem-${dictionary.id}`} dictionary={dictionary} dictionaryList={dictionaryList} />})
         }
     </div>
 );
